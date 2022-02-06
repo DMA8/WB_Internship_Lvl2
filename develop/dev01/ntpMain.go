@@ -26,6 +26,7 @@ func main() {
 	fmt.Println(time)
 }
 
+//GetTime provides curent time from remote serv through ntp
 func GetTime()(time.Time, error){
 	time, err := ntp.Time("0.beevik-ntp.pool.ntp.org")
 	return time, err
