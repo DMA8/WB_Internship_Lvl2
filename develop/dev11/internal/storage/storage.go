@@ -13,12 +13,15 @@ import (
 // проверяем, в пределах ли месяца ивент. Как только мы встречаем ивент за пределами месяца,
 // мы прекращаем поиск и отдаем срез ивентов.
 
+
+//EventStorage represents all events that were collected.
 type EventStorage struct {
 	ID			int
 	Events		map[int]models.Event
 	SortedKeys	[]int
 }
 
+//NewEventStorage returns new EventStorage
 func NewEventStorage() *EventStorage{
 	return &EventStorage{
 		ID: 0,
@@ -26,6 +29,7 @@ func NewEventStorage() *EventStorage{
 	}
 }
 
+//CreateEvent adds given event to all events
 func (s *EventStorage) CreateEvent(event models.Event) (models.Event, error) {
 	ID := s.ID + 1
 	s.ID++
@@ -33,6 +37,7 @@ func (s *EventStorage) CreateEvent(event models.Event) (models.Event, error) {
 	return event, nil
 }
 
+//UpdateEvent updates info about given event
 func (s *EventStorage) UpdateEvent(ID int, updatedEvent models.Event) (models.Event, error) {
 	event, ok := s.Events[ID]
 	if !ok {
@@ -42,6 +47,7 @@ func (s *EventStorage) UpdateEvent(ID int, updatedEvent models.Event) (models.Ev
 	return event, nil
 }
 
+//DeleteEvent deletes givev event by its id
 func (s *EventStorage) DeleteEvent(ID int) error{
 	_, ok := s.Events[ID]
 	if !ok {
@@ -52,7 +58,7 @@ func (s *EventStorage) DeleteEvent(ID int) error{
 	return nil
 }
 
-
+//GetEventsForDay returns all events for given date
 func (s *EventStorage) GetEventsForDay(date time.Time) []models.Event{
 	res := []models.Event{}
 	y1, m1, d1 :=date.Date()
@@ -66,6 +72,7 @@ func (s *EventStorage) GetEventsForDay(date time.Time) []models.Event{
 	return res
 }
 
+//GetEventsForWeek returns all events for given week
 func (s *EventStorage) GetEventsForWeek(date time.Time)[]models.Event{
 	res := []models.Event{}
 	y1, w1 := date.ISOWeek()
@@ -78,6 +85,7 @@ func (s *EventStorage) GetEventsForWeek(date time.Time)[]models.Event{
 	return res
 }
 
+//GetEventsForMonth returns all events for given month
 func (s *EventStorage) GetEventsForMonth(date time.Time)[]models.Event{
 	res := []models.Event{}
 	y1, m1, _ := date.Date()

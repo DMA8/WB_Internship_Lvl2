@@ -31,6 +31,9 @@ func main() {
 
 Ответ:
 ```
-...
+fmt.Println(reflect.TypeOf(err)) -> *main.customError
+fmt.Println(reflect.ValueOf(err)) -> <nil>
+
+err == nil, когда тип равен nil и значение равно nil
 
 ```

@@ -13,38 +13,38 @@ func getDate(u *url.URL) (time.Time, error){
 	return time.Parse(models.TimeFormat, date)
 }
 
-func (h *Handler) GetEventsForDayHandler(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) getEventsForDayHandler(w http.ResponseWriter, r *http.Request) {
 	date, err := getDate(r.URL)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write(MakeJSONErrorResponse(MsgWrongDateFormat))
+		w.Write(makeJSONErrorResponse(msgWrongDateFormat))
 		return
 	}
 	events := h.storage.GetEventsForDay(date)
 	w.WriteHeader(http.StatusOK)
-	w.Write(MakeJSONResultResponse(events))
+	w.Write(makeJSONResultResponse(events))
 }
 
-func (h *Handler) GetEventsForWeekHandler(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) getEventsForWeekHandler(w http.ResponseWriter, r *http.Request) {
 	date, err := getDate(r.URL)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write(MakeJSONErrorResponse(MsgWrongDateFormat))
+		w.Write(makeJSONErrorResponse(msgWrongDateFormat))
 		return
 	}
 	events := h.storage.GetEventsForWeek(date)
 	w.WriteHeader(http.StatusOK)
-	w.Write(MakeJSONResultResponse(events))
+	w.Write(makeJSONResultResponse(events))
 }
 
-func (h *Handler) GetEventsForMonthHandler(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) getEventsForMonthHandler(w http.ResponseWriter, r *http.Request) {
 	date, err := getDate(r.URL)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write(MakeJSONErrorResponse(MsgWrongDateFormat))
+		w.Write(makeJSONErrorResponse(msgWrongDateFormat))
 		return
 	}
 	events := h.storage.GetEventsForMonth(date)
 	w.WriteHeader(http.StatusOK)
-	w.Write(MakeJSONResultResponse(events))
+	w.Write(makeJSONResultResponse(events))
 }

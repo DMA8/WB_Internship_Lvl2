@@ -8,65 +8,65 @@ import (
 	"../models"
 )
 
-func DeserializateEvent(r *http.Request) (models.Event, error){
+func deserializateEvent(r *http.Request) (models.Event, error){
 	var event models.Event
 	err := json.NewDecoder(r.Body).Decode(&event) // оптимальнее, чем Unmarshal
 	return event, err
 }
 
-func (h *Handler) CreateEventHandler(w http.ResponseWriter, r *http.Request) {
-	event, err := DeserializateEvent(r)//
+func (h *Handler) createEventHandler(w http.ResponseWriter, r *http.Request) {
+	event, err := deserializateEvent(r)//
 	fmt.Println(event)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write(MakeJSONErrorResponse(MsgWrongInputData))
+		w.Write(makeJSONErrorResponse(msgWrongInputData))
 		return
 	}
 
 	_, err =  h.storage.CreateEvent(event)
 	if err != nil{
 		w.WriteHeader(503)
-		w.Write(MakeJSONErrorResponse(err.Error()))
+		w.Write(makeJSONErrorResponse(err.Error()))
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	w.Write(MakeJSONPostSuccessResultResponse(MsgCreateSuccess))
+	w.Write(makeJSONPostSuccessResultResponse(msgCreateSuccess))
 }
 
-func (h *Handler) DeleteEventHandler(w http.ResponseWriter, r *http.Request) {
-	event, err := DeserializateEvent(r)
+func (h *Handler) deleteEventHandler(w http.ResponseWriter, r *http.Request) {
+	event, err := deserializateEvent(r)
 	fmt.Println(h.storage.Events)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write(MakeJSONErrorResponse(MsgWrongInputData))
+		w.Write(makeJSONErrorResponse(msgWrongInputData))
 		return
 	}
 
 	err =  h.storage.DeleteEvent(event.EventID)
 	if err != nil{
 		w.WriteHeader(503)
-		w.Write(MakeJSONErrorResponse(err.Error()))
+		w.Write(makeJSONErrorResponse(err.Error()))
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	w.Write(MakeJSONPostSuccessResultResponse(MsgDeleteSuccess))
+	w.Write(makeJSONPostSuccessResultResponse(msgDeleteSuccess))
 }
 
-func (h *Handler) UpdateEventHandler(w http.ResponseWriter, r *http.Request) {
-	event, err := DeserializateEvent(r)
+func (h *Handler) updateEventHandler(w http.ResponseWriter, r *http.Request) {
+	event, err := deserializateEvent(r)
 	fmt.Println(event)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write(MakeJSONErrorResponse(MsgWrongInputData))
+		w.Write(makeJSONErrorResponse(msgWrongInputData))
 		return
 	}
 
 	_, err =  h.storage.UpdateEvent(event.EventID, event)
 	if err != nil{
 		w.WriteHeader(503)
-		w.Write(MakeJSONErrorResponse(err.Error()))
+		w.Write(makeJSONErrorResponse(err.Error()))
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	w.Write(MakeJSONPostSuccessResultResponse(MsgUpdatedSuccess))
+	w.Write(makeJSONPostSuccessResultResponse(msgUpdatedSuccess))
 }
