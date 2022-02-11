@@ -2,10 +2,6 @@ package pkg
 
 import "testing"
 
-func TestFindAnagram(t *testing.T) {
-	inpData1 := 
-}
-
 
 func TestCheckAnagram(t *testing.T){
 	w1 := "листок"
