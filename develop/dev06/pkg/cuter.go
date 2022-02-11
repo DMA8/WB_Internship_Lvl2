@@ -35,9 +35,13 @@ func(c *Cuter)cut(){
 			continue
 		}
 		splitted := strings.Split(v, c.CmdLine.Delimiter)
-		if len(splitted) < c.CmdLine.Field {
+		if len(splitted) < c.CmdLine.Field && !c.CmdLine.OnlyStringsWithSep{
+			fmt.Println(strings.Join(splitted, " "))
+			// c.Output = append(c.Output, "\n") // для тестов
+		}else if len(splitted) < c.CmdLine.Field && c.CmdLine.OnlyStringsWithSep{
 			fmt.Println()
-			//c.Output = append(c.Output, "\n") // для тестов
+			// c.Output = append(c.Output, "\n") // для тестов
+
 		} else {
 			fmt.Println(splitted[c.CmdLine.Field - 1])
 			c.Output = append(c.Output, splitted[c.CmdLine.Field - 1]) // для тестов

@@ -7,6 +7,8 @@ import (
 )
 
 /*
+Суть - упростить сложную инициализацию объекта
+
 Строитель — это порождающий паттерн проектирования,
 который позволяет создавать сложные объекты пошагово.
 Строитель даёт возможность использовать один и тот же
@@ -17,14 +19,19 @@ import (
 объекта за пределы его собственного класса, поручив это
 дело отдельным объектам, называемым строителями.
 */
+
+
 func main() {
-	var myBuilder CarBuilder
 	var buildInstance BuilderOfCars
-	myBuilder = &buildInstance
-	myBuilder.CreateCar()
-	myBuilder.SetCarColor("red")
-	myBuilder.SetEngine("VAZ")
-	fmt.Println(myBuilder.GetCar())
+	build(&buildInstance)
+}
+
+func build(a CarBuilder){
+	a.CreateCar()
+	a.SetCarColor("red")
+	a.SetEngine("VAZ")
+	car := a.GetCar()
+	fmt.Println(car)
 }
 
 type CarBuilder interface {

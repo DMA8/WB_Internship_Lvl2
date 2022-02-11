@@ -11,6 +11,7 @@ import (
 func deserializateEvent(r *http.Request) (models.Event, error){
 	var event models.Event
 	err := json.NewDecoder(r.Body).Decode(&event) // оптимальнее, чем Unmarshal
+	defer r.Body.Close()
 	return event, err
 }
 

@@ -11,7 +11,7 @@ import (
 //cut -f2 -d "," bigCSV
 func TestCutFiles(t *testing.T) {
 	correctResult := "../texts/cut_f3_s_d_space_t" // cut -f3 -s -d' ' ../texts/t > cut_f3_s_d_space_t
-	myCmdLine := NewCmdLine("-f3 -s -d' ' ../texts/t")
+	myCmdLine := NewCmdLine("-f3`-s`-d `../texts/t")
 	myCuter := NewCuter(myCmdLine)
 	myCuter.CutFiles()
 	if !compareLines(correctResult, myCuter.Output) {
@@ -19,7 +19,7 @@ func TestCutFiles(t *testing.T) {
 	}
 
 	correctResult2 := "../texts/cut_f2_-d_comma_bigCSV" // cut -f2 -d "," bigCSV > cut_f2_-d_comma_bigCSV
-	myCmdLine2 := NewCmdLine("-f2 -d',' ../texts/bigCSV")
+	myCmdLine2 := NewCmdLine("-f2`-d,`../texts/bigCSV")
 	myCuter2 := NewCuter(myCmdLine2)
 	myCuter2.CutFiles()
 	if !compareLines(correctResult2, myCuter2.Output) {

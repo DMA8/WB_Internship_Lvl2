@@ -27,7 +27,6 @@ func ShellMain(){
 			continue
 		}
 		handleForks(line[:len(line)-1])
-		fmt.Println("------------------------------------------")
 	}
 }
 
@@ -38,7 +37,7 @@ func handleForks(inpLine string){
 		if err != 0 {
 			log.Fatal(err)
 		}
-		if pid == 0 {
+		if pid == 0 { // if child process
 			fmt.Println(os.Getegid())
 			handlePipes(forks[i])
 			fmt.Println("Done")

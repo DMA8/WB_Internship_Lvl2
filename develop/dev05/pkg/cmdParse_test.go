@@ -1,7 +1,6 @@
 package pkg
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -29,7 +28,6 @@ func TestNewCmdLine(t *testing.T){
 		t.Error("Failed1")
 	}
 	if !compareSliceStrings(res1.Files, correct1.Files){
-		fmt.Println(res1.Files)
 		t.Error("Failed1 files problem!")
 	}
 }

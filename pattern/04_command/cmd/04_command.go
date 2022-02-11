@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"../pkg"
 )
-// Суть - сделать слой между объектами
+// Команда — это материализация вызова метода.
 
 /*Команда — это поведенческий паттерн проектирования,
 который превращает запросы в объекты, позволяя
@@ -25,12 +25,12 @@ import (
 func main() {
 	var commandQueue []pkg.Commander // очередь команд
 
-	engine := &pkg.Engine{State: false}
-	OnCmd := &pkg.OnStartCommand{MyEngine: engine}
-	OffCmd := &pkg.OnSwitchOffCommand{MyEngine: engine}
-	commandQueue = append(commandQueue, OnCmd, OffCmd, OnCmd, OffCmd) // если добавить изменить команду, состояние двигателя изменится
-	driver := pkg.Driver{CommandQueue: commandQueue}
-	driver.Execute()
+	engine := &pkg.Engine{State: false} //бизнес логика
+	OnCmd := &pkg.OnStartCommand{MyEngine: engine} // команда1 которая знает что делать с объектом бизнес логики
+	OffCmd := &pkg.OnSwitchOffCommand{MyEngine: engine} // команда 2
+	commandQueue = append(commandQueue, OnCmd, OffCmd, OnCmd, OffCmd) // очередь команд
+	driver := pkg.Driver{CommandQueue: commandQueue} //интерфейсный слой. (кнопка, которая запускает команды) (driver ничего не знает про engine)
+	driver.Execute() //здесь на кнопку нажали и все команды из очереди выполнились
 	fmt.Println(engine)
 }
 

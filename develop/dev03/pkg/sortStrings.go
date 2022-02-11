@@ -74,9 +74,14 @@ func (s *SortStrings)keyColumnSortAsString(){
 		HashColumnString[columnValue] = append(HashColumnString[columnValue], v)
 	}
 	s.Sorter.Sort(Columns)
+	tmp := "" // пропускать повторы ключей мапы
 	for _, v := range Columns{
+		if v == tmp{
+			continue
+		}
 		s.Sorter.Sort(HashColumnString[v])
 		s.SortedStrings = append(s.SortedStrings, HashColumnString[v]...)
+		tmp = v
 	}
 }
 
@@ -96,7 +101,7 @@ func (s *SortStrings)keyColumnSortAsFloat(){
 		HashColumnString[columnValue] = append(HashColumnString[columnValue], v)
 	}
 	s.Sorter.Sort(Columns)
-	vLast := 0.0
+	vLast := 0.0 // для пропуска повторов
 	for i, v := range Columns{
 		if i != 0{
 			if vLast == v {

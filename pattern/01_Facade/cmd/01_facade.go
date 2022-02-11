@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"../pkg"
 )
+
 type FilmWatcherCascade struct {
 	MyKettle	pkg.Kettle
 	MyFilm		pkg.Film

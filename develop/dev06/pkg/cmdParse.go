@@ -1,6 +1,7 @@
 package pkg
 
 import (
+	"fmt"
 	"log"
 	"strconv"
 	"strings"
@@ -30,13 +31,14 @@ func NewCmdLine(inpStr string) *CmdLine {
 }
 
 func (c *CmdLine)initCmdLine(inpStr string) {
-	operands := strings.Split(inpStr, " ")
+	fmt.Println("str: ",inpStr)
+	operands := strings.Split(inpStr, "`")
 	for _, v := range operands {
 		if v == ""{
 			continue
 		}
 		if v[0] == '-' {
-			c.setFlags(inpStr)
+			c.setFlags(v)
 		} else if v[0] != '\t' && v[0] != ' ' && v[0] != '"' && v[0] != '\''{
 			c.Files = append(c.Files, v)
 		}
@@ -86,17 +88,7 @@ func setNumeredFlag(rawCmdString string, structField, outerInd *int){
 }
 
 func (c *CmdLine)catchDelimiter(inpStr string){ // strings.Fields
-	delim := ""
-	for i := 0; i < len(inpStr) - 2; i++ {
-		if inpStr[i:i+2] == "-d"{
-			quote := inpStr[i + 2]
-			for j := i + 3; j < len(inpStr); j++ {
-				if inpStr[j] == quote{
-					c.Delimiter = delim
-					return
-				} 
-				delim += string(inpStr[j])
-			}
-		}
+	if len(inpStr) > 2 && inpStr[:2] == "-d"{
+		c.Delimiter = inpStr[2:]
 	}
 }

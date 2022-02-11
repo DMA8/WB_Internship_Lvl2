@@ -7,8 +7,8 @@ import (
 func TestEmbededSort(t *testing.T){
 	sorter := QuickSort{}
 
-	testCase1 := []string{"yoba", "biba", "zoba", "aboba"}
-	testCase1Result := []string{"aboba", "biba", "yoba", "zoba"}
+	testCase1 := []string{"yo", "bible", "zoba", "arkanzas"}
+	testCase1Result := []string{"arkanzas", "bible", "yo", "zoba"}
 
 	testCase2 := []int{9, 2, 3, 6, 1, 5, 4, 8, 7}
 	testCase2Result := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
