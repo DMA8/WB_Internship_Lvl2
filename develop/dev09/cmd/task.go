@@ -1,10 +1,14 @@
 package main
 
 import (
+	"fmt"
+	"os"
+
 	"../pkg"
 )
-//TODO add wg
+
 func main() {
-	myUrl := "https://hh.ru/"
+	myUrl := os.Args[1]
 	pkg.MainDownload(myUrl)
+	fmt.Println("done")
 }

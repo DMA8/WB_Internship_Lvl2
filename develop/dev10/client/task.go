@@ -40,7 +40,6 @@ func TCPClient(host, port string, timoutSec int32){
 func msgSender(wg *sync.WaitGroup, connect net.Conn){
 	stdInReader := bufio.NewReader(os.Stdin)
 	for {
-		fmt.Println("Text to send")
 		text, err := stdInReader.ReadString('\n')
 		if err != nil {
 			if err == io.EOF{
