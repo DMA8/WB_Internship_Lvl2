@@ -25,7 +25,5 @@ func main(){
 	firstWarior.DoDamage(100, secondWarior)
 	firstWarior.DoDamage(50, secondWarior)
 	firstWarior.DoDamage(50, secondWarior)
-
 	fmt.Println(secondWarior)
-
 }

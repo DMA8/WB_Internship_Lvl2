@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"time"
+	"sync"
 
 	"../models"
 )
@@ -19,6 +20,7 @@ type EventStorage struct {
 	ID			int
 	Events		map[int]models.Event
 	SortedKeys	[]int
+	mux 			sync.Mutex
 }
 
 //NewEventStorage returns new EventStorage
@@ -26,6 +28,7 @@ func NewEventStorage() *EventStorage{
 	return &EventStorage{
 		ID: 0,
 		Events: make(map[int]models.Event),
+		mux: sync.Mutex{},
 	}
 }
 
@@ -49,11 +52,15 @@ func (s *EventStorage) UpdateEvent(ID int, updatedEvent models.Event) (models.Ev
 
 //DeleteEvent deletes givev event by its id
 func (s *EventStorage) DeleteEvent(ID int) error{
+	var mux sync.Mutex
+	mux.Lock()
 	_, ok := s.Events[ID]
 	if !ok {
 		return errors.New("can't delete! Event doesn't exist")
 	}
+
 	delete(s.Events, ID)
+	mux.Unlock()
 	fmt.Println(s.Events)
 	return nil
 }
@@ -62,13 +69,15 @@ func (s *EventStorage) DeleteEvent(ID int) error{
 func (s *EventStorage) GetEventsForDay(date time.Time) []models.Event{
 	res := []models.Event{}
 	y1, m1, d1 :=date.Date()
-
+	s.mux.Lock()
 	for _, event := range s.Events{
 		y2, m2, d2 := event.Date.Date()
 		if y1 == y2 && m1 == m2 && d1 == d2{
 			res = append(res, event)
 		}
 	}
+	s.mux.Unlock()
+
 	return res
 }
 
