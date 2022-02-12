@@ -6,7 +6,7 @@ import (
 	"../internal/handlers"
 	"../internal/storage"
 )
-
+//TODO: защитить storage мьютексами
 func main() {
 	storage := storage.NewEventStorage()
 	handler := handlers.NewHandler(storage)

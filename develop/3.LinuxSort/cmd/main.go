@@ -8,6 +8,8 @@ import (
 	"../pkg"
 )
 
+//TODO: переписать парсинг флагов, исплозуя пакет flag
+
 func main(){
 	inputString := strings.Join(os.Args[1:], " ")
 	inputString = strings.TrimSuffix(inputString, "\n")
